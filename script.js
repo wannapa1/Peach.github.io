@@ -1,42 +1,29 @@
-/* =====================================
-   E-BOOK PORTFOLIO
-   Sutthisa Intarajongjit
-===================================== */
+// ======================================
+// SUTTHISA E-BOOK PORTFOLIO
+// ======================================
 
-function ebookPortfolio() {
+window.ebookPortfolio = function () {
     return {
-
-        // PAGE SYSTEM
         currentPage: 1,
         totalPages: 3,
-
-        // TABLE OF CONTENTS
         openToc: false,
 
-        // PAGE INFORMATION
         pages: [
-            {
-                number: 1,
-                title: "หน้าปก",
-                subtitle: "Portfolio & Profile"
-            },
-            {
-                number: 2,
-                title: "ประวัติส่วนตัว",
-                subtitle: "Personal Information"
-            },
-            {
-                number: 3,
-                title: "ผลงานและกิจกรรม",
-                subtitle: "Activities & Achievements"
-            }
+            { number: 1, title: "หน้าปก" },
+            { number: 2, title: "ประวัติส่วนตัว" },
+            { number: 3, title: "ผลงานและกิจกรรม" }
         ],
 
-        // GO TO SPECIFIC PAGE
+        init() {
+            console.log("E-Book Portfolio Loaded!");
+
+            this.$nextTick(() => {
+                this.refreshIcons();
+            });
+        },
+
         goToPage(page) {
-            if (page < 1 || page > this.totalPages) {
-                return;
-            }
+            if (page < 1 || page > this.totalPages) return;
 
             this.currentPage = page;
             this.openToc = false;
@@ -49,72 +36,31 @@ function ebookPortfolio() {
             this.refreshIcons();
         },
 
-        // NEXT PAGE
         nextPage() {
-            if (this.currentPage < this.totalPages) {
-                this.goToPage(this.currentPage + 1);
-            }
+            this.goToPage(this.currentPage + 1);
         },
 
-        // PREVIOUS PAGE
         prevPage() {
-            if (this.currentPage > 1) {
-                this.goToPage(this.currentPage - 1);
-            }
+            this.goToPage(this.currentPage - 1);
         },
 
-        // TOGGLE TABLE OF CONTENTS
         toggleToc() {
             this.openToc = !this.openToc;
         },
 
-        // CLOSE TABLE OF CONTENTS
         closeToc() {
             this.openToc = false;
         },
 
-        // KEYBOARD CONTROL
-        init() {
-            this.$watch('currentPage', () => {
-                this.refreshIcons();
-            });
-
-            this.$nextTick(() => {
-                this.refreshIcons();
-            });
-
-            window.addEventListener('keydown', (event) => {
-
-                if (event.key === "ArrowRight") {
-                    this.nextPage();
-                }
-
-                if (event.key === "ArrowLeft") {
-                    this.prevPage();
-                }
-
-                if (event.key === "Escape") {
-                    this.closeToc();
-                }
-            });
-        },
-
-        // REFRESH LUCIDE ICONS
         refreshIcons() {
             this.$nextTick(() => {
                 if (window.lucide) {
-                    lucide.createIcons();
+                    window.lucide.createIcons();
                 }
             });
         }
     };
-}
+};
 
-// INITIALIZE ICONS
-document.addEventListener("DOMContentLoaded", () => {
-
-    if (window.lucide) {
-        lucide.createIcons();
-    }
-
-});
+// Check JavaScript
+console.log("Portfolio JavaScript Connected");
